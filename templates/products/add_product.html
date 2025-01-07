@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2>Add Product</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Name Field -->
+                        <div class="mb-3">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
+                            <input type="text" name="name" id="{{ form.name.id_for_label }}" class="form-control">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="{{ form.brand.id_for_label }}" class="form-label">Brand</label>
+                            <input type="text" name="brand" id="{{ form.brand.id_for_label }}" class="form-control">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+                            <input type="text" name="category" id="{{ form.category.id_for_label }}" class="form-control">
+                        </div>
+
+                        <!-- Description Field (Smaller size) -->
+                        <div class="mb-3">
+                            <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                            <textarea name="description" id="{{ form.description.id_for_label }}" class="form-control" rows="4"></textarea>
+                        </div>
+
+                        <!-- Price Field -->
+                        <div class="mb-3">
+                            <label for="{{ form.price.id_for_label }}" class="form-label">Price</label>
+                            <input type="number" name="price" id="{{ form.price.id_for_label }}" class="form-control">
+                        </div>
+
+                        <!-- Image Field -->
+                        <div class="mb-3">
+                            <label for="{{ form.image.id_for_label }}" class="form-label">Image</label>
+                            <input type="file" name="image" id="{{ form.image.id_for_label }}" class="form-control">
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-block">Add Product</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CSS to make the description field smaller -->
+<style>
+    .form-control {
+        width: 100%;
+    }
+
+    .form-control#id_description {
+        height: 100px; /* Smaller height for description */
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="text-center my-5">
+    <h1 class="display-4 fw-bold text-primary">Welcome to ReviProd</h1>
+    <p class="lead text-muted">Discover the best products, read user reviews, and share your experiences with the community.</p>
+</div>
+
+<!-- Buttons Section -->
+<div class="d-flex justify-content-center gap-3 mb-5">
+    <a href="{% url 'explore_products' %}" class="btn btn-outline-primary btn-lg">Explore Products</a>
+</div>
+
+<section>
+    <div class="container my-5">
+        <h1 class="text-center text-primary mb-4">Recommended Products</h1>
+
+        {% if recommendations_with_explanations %}
+            <div class="row">
+                {% for product, explanation in recommendations_with_explanations %}
+                    <div class="col-md-3">
+                        <div class="card">
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="object-fit: cover; height: 300px;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p>{{ product.description|truncatewords:20 }}</p>
+                                <p><strong>Price:</strong> ${{ product.price }}</p>
+                                <p><strong>Why recommended:</strong> {{ explanation }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-muted">No recommendations available at the moment.</p>
+        {% endif %}
+    </div>
+</section>
+
+
+<!-- Latest Reviews Section -->
+<section class="mt-5">
+    <h2 class="text-primary fw-bold">Latest Reviews</h2>
+    <p class="text-muted">Check out what our users are saying about their favorite products.</p>
+    <div class="list-group">
+        {% for review in latest_reviews %}
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <strong class="text-dark">{{ review.user.username }}:</strong>
+                <span class="text-muted">{{ review.description }}</span>
+            </div>
+            <div>
+                <!-- Rating stars -->
+                {% for i in star_range %}
+                    {% if i <= review.rating %}
+                        <span class="star" style="color: #dfdf33; font-size: 1.25rem;">&#9733;</span>  <!-- Full star -->
+                    {% else %}
+                        <span class="star" style="color: grey; font-size: 1.25rem;">&#9734;</span>  <!-- Empty star -->
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">No reviews yet. Be the first to review a product!</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

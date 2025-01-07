@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Review System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="{% url 'home' %}">ReviProd</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+
+                    {% if user.is_authenticated %}
+                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'explore_products' %}">Explore Products</a>
+                        </li>
+
+                            {% if user.is_staff %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'view_all_user_profiles' %}">User Profiles</a>
+                            </li>
+
+                            <li class="nav-item">
+                                 <a class="nav-link" href="{% url 'add_product' %}">Add Product</a>
+                            </li>
+                            {% endif %}
+
+                        <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+
+                        <li class="nav-item">
+                                <a class="nav-link">Hi, {{ user.username }} !</a>
+                        </li>
+
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        {% block content %}
+        <div class="text-center">
+            <h2>Discover and Review Products</h2>
+            <p>Browse our wide range of products and share your thoughts with the community.</p>
+        </div>
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light text-center py-4 mt-5">
+        <p class="mb-0">Product Review System. Cornea Horea Ionut, Group: 30433</p>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
